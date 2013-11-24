@@ -25,6 +25,7 @@
 typedef void (^WVJBResponseCallback)(id responseData);
 typedef void (^WVJBHandler)(id data, WVJBResponseCallback responseCallback);
 
+
 @interface WebViewJavascriptBridge : WVJB_WEBVIEW_DELEGATE_TYPE
 
 + (instancetype)bridgeForWebView:(WVJB_WEBVIEW_TYPE*)webView handler:(WVJBHandler)handler;
@@ -38,5 +39,7 @@ typedef void (^WVJBHandler)(id data, WVJBResponseCallback responseCallback);
 - (void)callHandler:(NSString*)handlerName data:(id)data;
 - (void)callHandler:(NSString*)handlerName data:(id)data responseCallback:(WVJBResponseCallback)responseCallback;
 - (void)reset;
+
+@property (weak) id webViewDelegate;
 
 @end

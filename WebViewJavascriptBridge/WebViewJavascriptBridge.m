@@ -18,7 +18,6 @@ typedef NSDictionary WVJBMessage;
 
 @implementation WebViewJavascriptBridge {
     WVJB_WEAK WVJB_WEBVIEW_TYPE* _webView;
-    WVJB_WEAK id _webViewDelegate;
     NSMutableArray* _startupMessageQueue;
     NSMutableDictionary* _responseCallbacks;
     NSMutableDictionary* _messageHandlers;
