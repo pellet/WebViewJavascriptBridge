@@ -106,11 +106,36 @@
 		_fetchQueue: _fetchQueue,
 		_handleMessageFromObjC: _handleMessageFromObjC
 	}
-
-	var doc = document
-	_createQueueReadyIframe(doc)
-	var readyEvent = doc.createEvent('Events')
-	readyEvent.initEvent('WebViewJavascriptBridgeReady')
-	readyEvent.bridge = WebViewJavascriptBridge
-	doc.dispatchEvent(readyEvent)
+//    console.log("hello console");
+	var observer, callback;
+	callback = function( recordqueue )
+	{
+		recordqueue.map( function(mutationRecord)
+			{
+				for(var key in mutationRecord.addedNodes) {
+					if ('[object HTMLBodyElement]' == mutationRecord.addedNodes[key]) {
+						var doc = window.document
+						_createQueueReadyIframe(doc)
+						var readyEvent = doc.createEvent('Events')
+						readyEvent.initEvent('WebViewJavascriptBridgeReady')
+						readyEvent.bridge = WebViewJavascriptBridge
+						doc.dispatchEvent(readyEvent)
+                        observer.disconnect();
+					}
+				}
+			});
+					
+	};
+	
+	
+	observer = new MutationObserver( callback );
+	
+	var  options = {
+	    // required, and observes additions or deletion of child nodes.
+	    'childList': true, 
+	    // observes the addition or deletion of "grandchild" nodes.
+	    'subtree': true
+	};
+	
+	observer.observe( document, options );
 })();
