@@ -373,12 +373,6 @@ static bool logging = false;
 - (void)webViewDidStartLoad:(UIWebView *)webView {
     if (webView != _webView) { return; }
     
-    if (_numRequestsLoading == 0 && ![[webView stringByEvaluatingJavaScriptFromString:@"typeof WebViewJavascriptBridge == 'object'"] isEqualToString:@"true"]) {
-        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"WebViewJavascriptBridge" ofType:@"js"];
-        NSString *js = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
-        [webView stringByEvaluatingJavaScriptFromString:js];
-    }
-    
     _numRequestsLoading++;
     
     __strong typeof(_webViewDelegate) strongDelegate = _webViewDelegate;
